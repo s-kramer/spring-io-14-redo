@@ -1,0 +1,5 @@
+org.springframework.boot.SpringApplicationRunListener=\
+com.example.demo.GreetingApplicationRunListener
+
+org.springframework.boot.diagnostics.FailureAnalyzer=\
+com.example.demo.GreetingFailureAnalyzer
