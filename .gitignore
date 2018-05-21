@@ -1,0 +1,10 @@
+.*
+!.gitignore
+!.mvn
+*.iml
+build
+target
+*.orig
+node_modules
+!.editorconfig
+!.angular-cli.json
