@@ -10,6 +10,11 @@ import java.util.stream.Stream;
 import io.spring.lab.marketing.special.calculate.SpecialCalculator;
 import io.spring.lab.math.MathProperties;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
+@Component
+@Primary
 public class BestSpecialSelector implements SpecialSelector {
 
 	private final MathProperties math;

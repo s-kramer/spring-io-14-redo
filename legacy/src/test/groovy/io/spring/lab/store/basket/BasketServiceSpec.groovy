@@ -1,6 +1,6 @@
 package io.spring.lab.store.basket
 
-import io.spring.lab.math.MathProperties
+import MathProperties
 import io.spring.lab.store.basket.item.BasketItem
 import io.spring.lab.store.basket.item.BasketItemRepository
 import io.spring.lab.store.basket.item.BasketItemService

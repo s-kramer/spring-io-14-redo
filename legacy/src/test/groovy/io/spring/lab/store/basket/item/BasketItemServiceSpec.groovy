@@ -1,6 +1,6 @@
 package io.spring.lab.store.basket.item
 
-import io.spring.lab.math.MathProperties
+import MathProperties
 import io.spring.lab.store.basket.Basket
 import io.spring.lab.store.basket.BasketRepository
 import io.spring.lab.store.basket.BasketUpdateDiff

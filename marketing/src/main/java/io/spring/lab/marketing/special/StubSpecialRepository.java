@@ -11,6 +11,10 @@ import java.util.UUID;
 
 import io.spring.lab.marketing.special.calculate.SpecialCalculator;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.springframework.stereotype.Component;
+
+@Component
 class StubSpecialRepository implements SpecialRepository {
 
     private final Map<String, Special> db = new HashMap<>();
@@ -49,7 +53,7 @@ class StubSpecialRepository implements SpecialRepository {
     private String setAndGetNextId(Special special) {
         try {
             String id = UUID.randomUUID().toString();
-            writeField(special, "id", id, true);
+            FieldUtils.writeField(special, "id", id, true);
             return id;
         } catch (IllegalAccessException e) {
             throw new RuntimeException("Unexpected error!", e);

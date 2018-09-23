@@ -4,6 +4,7 @@ import io.spring.lab.marketing.special.calculate.SpecialCalculation
 import io.spring.lab.marketing.special.select.BestSpecialSelector
 import io.spring.lab.marketing.special.select.SpecialSelector
 import io.spring.lab.math.MathProperties
+import io.spring.lab.math.MathProperties
 import spock.lang.Specification
 import spock.lang.Unroll
 

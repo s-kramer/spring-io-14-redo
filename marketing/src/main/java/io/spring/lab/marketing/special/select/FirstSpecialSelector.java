@@ -7,6 +7,9 @@ import java.util.List;
 
 import io.spring.lab.marketing.special.calculate.SpecialCalculator;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class FirstSpecialSelector implements SpecialSelector {
 
 	@Override

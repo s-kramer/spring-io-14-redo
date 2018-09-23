@@ -4,7 +4,7 @@ import io.spring.lab.math.MathProperties
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static io.spring.lab.marketing.special.calculate.SpecialCalculator.regularPrice
+import static SpecialCalculator.regularPrice
 
 class RegularPriceSpec extends Specification {
 

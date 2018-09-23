@@ -8,6 +8,9 @@ import io.spring.lab.marketing.special.calculate.SpecialCalculator;
 import io.spring.lab.marketing.special.select.SpecialSelector;
 import io.spring.lab.math.MathProperties;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class SpecialService {
 
 	private final SpecialRepository specials;

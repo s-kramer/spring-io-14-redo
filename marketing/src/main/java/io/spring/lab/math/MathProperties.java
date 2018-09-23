@@ -6,7 +6,10 @@ import java.math.MathContext;
 
 import lombok.Data;
 
+import org.springframework.stereotype.Component;
+
 @Data
+@Component
 public class MathProperties {
 
 	/** Precision for Math operations */
