@@ -1,6 +1,6 @@
 package io.spring.lab.store.basket
 
-import MathProperties
+import io.spring.lab.math.MathProperties
 import spock.lang.Specification
 import spock.lang.Unroll
 

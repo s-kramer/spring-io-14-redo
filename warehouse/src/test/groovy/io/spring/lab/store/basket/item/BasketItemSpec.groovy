@@ -1,6 +1,6 @@
 package io.spring.lab.store.basket.item
 
-import MathProperties
+import io.spring.lab.math.MathProperties
 import io.spring.lab.store.basket.BasketUpdateDiff
 import io.spring.lab.store.item.ItemRepresentation
 import io.spring.lab.store.special.SpecialCalculation
