@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.stereotype.Component;
+
+@Component
 class StubBasketRepository implements BasketRepository {
 
     private final AtomicLong seq = new AtomicLong();

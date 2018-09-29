@@ -3,10 +3,12 @@ package io.spring.lab.warehouse.item;
 import java.util.List;
 
 import org.apache.commons.lang3.Validate;
+import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
+@Component
 public class ItemService {
 
 	private final ItemRepository items;

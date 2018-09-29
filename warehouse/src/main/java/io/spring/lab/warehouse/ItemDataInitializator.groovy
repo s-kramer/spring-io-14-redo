@@ -3,7 +3,7 @@ package io.spring.lab.warehouse
 import io.spring.lab.warehouse.item.Item
 import io.spring.lab.warehouse.item.ItemRepository
 
-class TestDataConfiguration {
+class ItemDataInitializator {
 
     static void itemsTestData(ItemRepository items) {
         items.save(new Item(null, 'A', 100, 40.0))

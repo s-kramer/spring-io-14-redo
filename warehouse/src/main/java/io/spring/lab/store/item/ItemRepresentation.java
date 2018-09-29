@@ -2,6 +2,7 @@ package io.spring.lab.store.item;
 
 import java.math.BigDecimal;
 
+import io.spring.lab.warehouse.item.Item;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

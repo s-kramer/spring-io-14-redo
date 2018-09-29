@@ -2,7 +2,7 @@ package io.spring.lab.warehouse.item
 
 import spock.lang.Specification
 
-import static io.spring.lab.warehouse.TestDataConfiguration.itemsTestData
+import static io.spring.lab.warehouse.ItemDataInitializator.itemsTestData
 
 class ItemServiceSpec extends Specification {
 

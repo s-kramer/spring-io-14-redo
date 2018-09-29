@@ -13,7 +13,10 @@ import io.spring.lab.store.special.SpecialCalculation;
 import io.spring.lab.store.special.SpecialClient;
 import lombok.AllArgsConstructor;
 
+import org.springframework.stereotype.Component;
+
 @AllArgsConstructor
+@Component
 public class BasketItemService {
 
 	private final BasketItemRepository basketItems;

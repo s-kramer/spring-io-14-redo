@@ -6,7 +6,10 @@ import io.spring.lab.math.MathProperties;
 import io.spring.lab.store.basket.item.BasketItemService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.stereotype.Component;
+
 @AllArgsConstructor
+@Component
 public class BasketService {
 
 	private final BasketRepository baskets;

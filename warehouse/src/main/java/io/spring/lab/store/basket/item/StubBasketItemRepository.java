@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.stereotype.Component;
+
+@Component
 class StubBasketItemRepository implements BasketItemRepository {
 
     private final AtomicLong seq = new AtomicLong();
