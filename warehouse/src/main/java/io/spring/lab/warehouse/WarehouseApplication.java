@@ -7,6 +7,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
@@ -17,13 +18,14 @@ public class WarehouseApplication {
     }
 }
 
+@ConditionalOnProperty(value = "test.data", matchIfMissing = true, havingValue = "true")
 @Component
 @AllArgsConstructor
 class ItemInitializer implements ApplicationRunner {
-    ItemRepository itemRepository;
+    ItemRepository items;
 
     @Override
     public void run(ApplicationArguments args) {
-        ItemDataInitializator.itemsTestData(itemRepository);
+        ItemDataInitializator.itemsTestData(items);
     }
 }
