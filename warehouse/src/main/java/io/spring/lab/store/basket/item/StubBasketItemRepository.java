@@ -50,7 +50,7 @@ class StubBasketItemRepository implements BasketItemRepository {
 
     private long setAndGetNextId(BasketItem basketItem) {
         try {
-            long id = seq.incrementAndGet();
+            long id = Optional.ofNullable(basketItem.getId()).orElseGet(seq::incrementAndGet);
             writeField(basketItem, "id", id, true);
             return id;
         } catch (IllegalAccessException e) {

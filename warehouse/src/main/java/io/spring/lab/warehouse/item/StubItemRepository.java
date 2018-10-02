@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Component;
@@ -35,7 +36,7 @@ class StubItemRepository implements ItemRepository {
 
     private long setAndGetNextId(Item item) {
         try {
-            long id = seq.incrementAndGet();
+            long id = Optional.ofNullable(item.getId()).orElseGet(seq::incrementAndGet);
             writeField(item, "id", id, true);
             return id;
         } catch (IllegalAccessException e) {
