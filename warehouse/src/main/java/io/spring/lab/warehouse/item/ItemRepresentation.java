@@ -30,3 +30,4 @@ class ItemRepresentation {
         return new Item(null, name, count, price);
     }
 }
+
