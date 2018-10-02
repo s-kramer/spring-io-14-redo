@@ -1,5 +1,7 @@
 package io.spring.lab.warehouse.item;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,15 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/item",
-        consumes= MediaType.APPLICATION_JSON_UTF8_VALUE,
+        consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
         produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 class ItemController {
-    private static final String ITEM_ID_PATH_VARIABLE = "itemId";
+    private static final String ITEM_ID = "itemId";
+    private static final String ITEM_ID_PATH_VARIABLE = "/{" + ITEM_ID + "}";
     private ItemService itemService;
 
     @GetMapping
@@ -30,21 +34,20 @@ class ItemController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{itemId}")
-    public ItemRepresentation getItem(@PathVariable(ITEM_ID_PATH_VARIABLE) long itemId) {
+    @GetMapping(ITEM_ID_PATH_VARIABLE)
+    public ItemRepresentation getItem(@PathVariable(ITEM_ID) long itemId) {
         return ItemRepresentation.of(itemService.findOne(itemId));
     }
 
-    @PutMapping
-    public ItemRepresentation updateItem(ItemUpdate itemUpdate) {
-        return ItemRepresentation.of(itemService.update(itemUpdate));
+    @PutMapping(ITEM_ID_PATH_VARIABLE)
+    public ItemRepresentation updateItem(@PathVariable(ITEM_ID) long itemId, @RequestBody ItemUpdate itemUpdate) {
+        return ItemRepresentation.of(itemService.update(itemUpdate.withId(itemId)));
     }
 
     @PostMapping
-    public ItemRepresentation createItem(@RequestBody  ItemRepresentation itemRepresentation) {
-        final Item item =
-                itemService.create(new Item(null, itemRepresentation.getName(), itemRepresentation.getCount(), itemRepresentation.getPrice()));
-        return ItemRepresentation.of(item);
+    @ResponseStatus(CREATED)
+    public ItemRepresentation createItem(@RequestBody ItemRepresentation itemRepresentation) {
+        return ItemRepresentation.of(itemService.create(itemRepresentation.asItem()));
     }
 
 }

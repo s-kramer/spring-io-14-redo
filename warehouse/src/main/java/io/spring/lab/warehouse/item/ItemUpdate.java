@@ -9,6 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Getter
 @AllArgsConstructor(access = PRIVATE)
 @EqualsAndHashCode
@@ -21,11 +24,12 @@ class ItemUpdate {
 
 	private final BigDecimal price;
 
-	static ItemUpdate of(String name, BigDecimal price) {
-		return new ItemUpdate(0, name, price);
-	}
-
 	ItemUpdate withId(long id) {
 		return new ItemUpdate(id, name, price);
 	}
+
+    @JsonCreator
+    static ItemUpdate fromJson(@JsonProperty("name") String name, @JsonProperty("price") BigDecimal price) {
+        return new ItemUpdate(0, name, price);
+    }
 }

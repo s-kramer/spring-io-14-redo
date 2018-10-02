@@ -8,22 +8,25 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import org.apache.commons.lang3.Validate;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemRepresentation {
+class ItemRepresentation {
 
-	private Long id;
+    private Long id;
 
-	private String name;
+    private String name;
 
-	private int count = 0;
+    private int count = 0;
 
-	private BigDecimal price = ZERO;
+    private BigDecimal price = ZERO;
 
-	public static ItemRepresentation of(Item item) {
+    static ItemRepresentation of(Item item) {
         return new ItemRepresentation(item.getId(), item.getName(), item.getCount(), item.getPrice());
+    }
+
+    Item asItem() {
+        return new Item(null, name, count, price);
     }
 }
