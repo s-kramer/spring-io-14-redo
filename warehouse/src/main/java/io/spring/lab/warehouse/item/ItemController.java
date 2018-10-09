@@ -44,6 +44,11 @@ class ItemController {
         return ItemRepresentation.of(itemService.update(itemUpdate.withId(itemId)));
     }
 
+    @PutMapping(ITEM_ID_PATH_VARIABLE + "/stock")
+    public ItemRepresentation updateItemStock(@PathVariable(ITEM_ID) long itemId, @RequestBody ItemStockUpdate itemStockUpdate) {
+        return ItemRepresentation.of(itemService.updateStock(itemStockUpdate.withId(itemId)));
+    }
+
     @PostMapping
     @ResponseStatus(CREATED)
     public ItemRepresentation createItem(@RequestBody ItemRepresentation itemRepresentation) {

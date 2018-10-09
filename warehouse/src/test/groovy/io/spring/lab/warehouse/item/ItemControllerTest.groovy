@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static org.hamcrest.Matchers.hasItems
+import static org.hamcrest.Matchers.stringContainsInOrder
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -72,6 +73,13 @@ class ItemControllerTest extends Specification {
                 .andExpect(jsonPath('$.price').value(10))
     }
 
+    def "should throw exception when requesting item that does not exist"() {
+        expect:
+        mockMvc.perform(get("/item/1234567890").contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath('$.message').value("Item 1234567890 does not exist"))
+    }
+
     def "should update item"() {
         final content = [name: 'updated']
         final body = objectmaper.writeValueAsString(content)
@@ -86,8 +94,27 @@ class ItemControllerTest extends Specification {
 
         and:
         mockMvc.perform(put("/item/3").contentType(APPLICATION_JSON_UTF8).content(modifiedBody))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath('$.name').value('modified name'))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath('$.name').value('modified name'))
+    }
+
+    def "should update item stock"() {
+        final content = [countDiff: 100]
+        final body = objectmaper.writeValueAsString(content)
+
+        expect:
+        mockMvc.perform(put("/item/3/stock").contentType(APPLICATION_JSON_UTF8).content(body))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath('$.count').isNotEmpty())
+                .andExpect(jsonPath('$.id').isNotEmpty())
+
+        final modifiedContent = [countDiff: -3000]
+        final modifiedBody = objectmaper.writeValueAsString(modifiedContent)
+
+        and:
+        mockMvc.perform(put("/item/3/stock").contentType(APPLICATION_JSON_UTF8).content(modifiedBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath('$.message').value(stringContainsInOrder(['Item', 'has only', 'out of -3000 requested'])))
     }
 
 }

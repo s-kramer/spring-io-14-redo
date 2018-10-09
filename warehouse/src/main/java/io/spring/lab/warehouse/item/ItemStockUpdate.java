@@ -5,7 +5,11 @@ import static lombok.AccessLevel.PRIVATE;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Getter
 @AllArgsConstructor(access = PRIVATE)
@@ -34,4 +38,9 @@ public class ItemStockUpdate {
 
 		return count + countDiff;
 	}
+
+    @JsonCreator
+    static ItemStockUpdate fromJson(@JsonProperty("id") long id, @JsonProperty("countDiff") int countDiff) {
+        return new ItemStockUpdate(id, countDiff);
+    }
 }
