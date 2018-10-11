@@ -1,20 +1,22 @@
 package io.spring.lab.warehouse.item;
 
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -50,9 +52,11 @@ class ItemController {
     }
 
     @PostMapping
-    @ResponseStatus(CREATED)
-    public ItemRepresentation createItem(@RequestBody ItemRepresentation itemRepresentation) {
-        return ItemRepresentation.of(itemService.create(itemRepresentation.asItem()));
+    public ResponseEntity<ItemRepresentation> createItem(@RequestBody ItemRepresentation itemRepresentation) {
+        final ItemRepresentation createdItem = ItemRepresentation.of(itemService.create(itemRepresentation.asItem()));
+        final URI link = linkTo(methodOn(ItemController.class).getItem(createdItem.getId())).toUri();
+
+        return ResponseEntity.created(link).build();
     }
 
 }

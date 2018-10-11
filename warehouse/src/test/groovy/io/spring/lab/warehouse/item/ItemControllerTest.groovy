@@ -6,8 +6,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import spock.lang.Specification
 
+import static org.hamcrest.Matchers.containsString
 import static org.hamcrest.Matchers.hasItems
 import static org.hamcrest.Matchers.stringContainsInOrder
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8
@@ -56,11 +58,7 @@ class ItemControllerTest extends Specification {
 
         then:
         result.andExpect(status().isCreated())
-
-        and:
-        result.andExpect(jsonPath('$.name').value(('itemName')))
-        result.andExpect(jsonPath('$.count').value((10)))
-        result.andExpect(jsonPath('$.price').value(13.5))
+                .andExpect(MockMvcResultMatchers.header().string("location", containsString("/item/5")))
     }
 
     def "should find item by id"() {
