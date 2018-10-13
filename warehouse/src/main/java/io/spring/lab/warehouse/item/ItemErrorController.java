@@ -23,4 +23,9 @@ class ItemErrorController {
     ResponseEntity<ErrorMessage> outOfStock(OutOfStock e) {
         return ErrorMessage.messageResponseOf(BAD_REQUEST, e);
     }
+
+    @ExceptionHandler
+    ResponseEntity<ErrorMessage> illegalArgumentException(IllegalArgumentException e) {
+        return ErrorMessage.messageResponseOf(BAD_REQUEST, e);
+    }
 }

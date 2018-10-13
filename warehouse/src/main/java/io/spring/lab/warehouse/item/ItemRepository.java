@@ -14,4 +14,6 @@ public interface ItemRepository {
     Optional<Item> findMostExpensiveItem();
 
     void delete(long id);
+
+    void deleteAllItems();
 }

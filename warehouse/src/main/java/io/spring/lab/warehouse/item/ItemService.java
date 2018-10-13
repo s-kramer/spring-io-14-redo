@@ -20,7 +20,7 @@ public class ItemService {
 	}
 
 	public Item findMostExpensiveItem() {
-        return items.findMostExpensiveItem().orElseThrow(() -> new IllegalArgumentException("No items in database"));
+        return items.findMostExpensiveItem().orElseThrow(() -> new IllegalArgumentException("No items in repository"));
     }
 
 	public List<Item> findAll() {

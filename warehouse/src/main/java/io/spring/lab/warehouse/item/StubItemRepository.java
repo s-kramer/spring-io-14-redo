@@ -42,6 +42,11 @@ class StubItemRepository implements ItemRepository {
         db.remove(id);
     }
 
+    @Override
+    public void deleteAllItems() {
+        db.clear();
+    }
+
     private long setAndGetNextId(Item item) {
         try {
             long id = Optional.ofNullable(item.getId()).orElseGet(seq::incrementAndGet);

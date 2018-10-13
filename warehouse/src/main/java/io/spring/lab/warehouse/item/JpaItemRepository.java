@@ -45,6 +45,11 @@ class JpaItemRepository implements ItemRepository {
         springCrudItemRepository.delete(id);
     }
 
+    @Override
+    public void deleteAllItems() {
+        springCrudItemRepository.deleteAll();
+    }
+
     interface SpringCrudItemRepository extends CrudRepository<Item, Long> {
         Item findTopByOrderByPriceDesc();
     }

@@ -14,6 +14,7 @@ import spock.lang.Specification
 import static org.hamcrest.Matchers.comparesEqualTo
 import static org.hamcrest.Matchers.containsString
 import static org.hamcrest.Matchers.hasItems
+import static org.hamcrest.Matchers.is
 import static org.hamcrest.Matchers.stringContainsInOrder
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
@@ -36,7 +37,7 @@ class ItemControllerTest extends Specification {
     ObjectMapper objectmaper
 
     @Autowired
-    ItemRepository itemRepository;
+    ItemRepository itemRepository
 
 
     def "should find all items in the repository"() {
@@ -145,6 +146,19 @@ class ItemControllerTest extends Specification {
         then:
         result.andExpect(status().isOk())
                 .andExpect(jsonPath('$.price', comparesEqualTo(maxPrice.toDouble())))
+    }
+
+    def "should throw when no items are available when querying for item with maximum price"() {
+        given:
+        itemRepository.deleteAllItems()
+
+        when:
+        def result = mockMvc.perform(get("/item/top").contentType(APPLICATION_JSON_UTF8))
+
+        then:
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath('$.message', is("No items in repository")))
+
     }
 
     private BigDecimal getMaxItemPrice() {
