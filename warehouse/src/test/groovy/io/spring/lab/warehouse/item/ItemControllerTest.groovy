@@ -1,7 +1,9 @@
 package io.spring.lab.warehouse.item
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
@@ -9,10 +11,12 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import spock.lang.Specification
 
+import static org.hamcrest.Matchers.comparesEqualTo
 import static org.hamcrest.Matchers.containsString
 import static org.hamcrest.Matchers.hasItems
 import static org.hamcrest.Matchers.stringContainsInOrder
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
@@ -21,7 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles(profiles = ["test", "h2"])
+@AutoConfigureTestDatabase
 class ItemControllerTest extends Specification {
 
     @Autowired
@@ -113,6 +118,44 @@ class ItemControllerTest extends Specification {
         mockMvc.perform(put("/item/3/stock").contentType(APPLICATION_JSON_UTF8).content(modifiedBody))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath('$.message').value(stringContainsInOrder(['Item', 'has only', 'out of -3000 requested'])))
+    }
+
+    def "should remove given item"() {
+        given:
+        mockMvc.perform(get("/item/5").contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+
+        when:
+        mockMvc.perform(delete("/item/5"))
+                .andExpect(status().isOk())
+
+        then:
+        mockMvc.perform(get("/item/5").contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound())
+
+    }
+
+    def "should find item with maximum price"() {
+        given:
+        BigDecimal maxPrice = getMaxItemPrice()
+
+        when:
+        def result = mockMvc.perform(get("/item/top").contentType(APPLICATION_JSON_UTF8))
+
+        then:
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath('$.price', comparesEqualTo(maxPrice.toDouble())))
+    }
+
+    private BigDecimal getMaxItemPrice() {
+        List<ItemRepresentation> currentItems = getAllItems()
+        return currentItems.stream().max { a, b -> a.price <=> b.price }.get().price
+    }
+
+    private List<ItemRepresentation> getAllItems() {
+        def responseBody = mockMvc.perform(get("/item").contentType(APPLICATION_JSON_UTF8))
+                .andReturn().response.getContentAsString()
+        return objectmaper.readValue(responseBody, new TypeReference<List<ItemRepresentation>>() {})
     }
 
 }

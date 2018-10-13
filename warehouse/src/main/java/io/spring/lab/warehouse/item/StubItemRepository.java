@@ -1,5 +1,6 @@
 package io.spring.lab.warehouse.item;
 
+import static java.util.Comparator.comparing;
 import static org.apache.commons.lang3.reflect.FieldUtils.writeField;
 
 import java.util.ArrayList;
@@ -9,17 +10,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.springframework.stereotype.Component;
-
-@Component
 class StubItemRepository implements ItemRepository {
 
     private final AtomicLong seq = new AtomicLong();
     private final Map<Long, Item> db = new HashMap<>();
 
     @Override
-    public Item findOne(long id) {
-        return db.get(id);
+    public Optional<Item> findOne(long id) {
+        return Optional.ofNullable(db.get(id));
     }
 
     @Override
@@ -32,6 +30,16 @@ class StubItemRepository implements ItemRepository {
         long id = setAndGetNextId(item);
         db.put(id, item);
         return item;
+    }
+
+    @Override
+    public Optional<Item> findMostExpensiveItem() {
+        return db.values().stream().max(comparing(Item::getPrice));
+    }
+
+    @Override
+    public void delete(long id) {
+        db.remove(id);
     }
 
     private long setAndGetNextId(Item item) {

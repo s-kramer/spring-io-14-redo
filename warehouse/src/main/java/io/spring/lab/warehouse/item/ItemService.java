@@ -1,6 +1,7 @@
 package io.spring.lab.warehouse.item;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Component;
@@ -14,12 +15,13 @@ public class ItemService {
 	private final ItemRepository items;
 
 	public Item findOne(long id) {
-		Item item = items.findOne(id);
-		if (item == null) {
-			throw new ItemNotFound(id);
-		}
-		return item;
+		Optional<Item> item = items.findOne(id);
+		return item.orElseThrow(() -> new ItemNotFound(id));
 	}
+
+	public Item findMostExpensiveItem() {
+        return items.findMostExpensiveItem().orElseThrow(() -> new IllegalArgumentException("No items in database"));
+    }
 
 	public List<Item> findAll() {
 		return items.findAll();
@@ -45,5 +47,9 @@ public class ItemService {
 
 		return items.save(item);
 	}
+
+    public void deleteItem(long itemId) {
+        items.delete(itemId);
+    }
 }
 
