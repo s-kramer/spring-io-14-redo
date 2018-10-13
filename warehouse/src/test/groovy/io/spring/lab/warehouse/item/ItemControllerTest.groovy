@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = ["test", "h2"])
+@ActiveProfiles(profiles = ["test"])
 @AutoConfigureTestDatabase
 class ItemControllerTest extends Specification {
 
