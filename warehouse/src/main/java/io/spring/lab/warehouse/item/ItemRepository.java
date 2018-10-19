@@ -16,4 +16,6 @@ public interface ItemRepository {
     void delete(long id);
 
     void deleteAllItems();
+
+    List<Item> findByNamePrefix(String prefix);
 }

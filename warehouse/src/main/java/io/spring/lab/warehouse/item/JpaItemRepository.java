@@ -6,7 +6,9 @@ import java.util.Optional;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
@@ -50,8 +52,16 @@ class JpaItemRepository implements ItemRepository {
         springCrudItemRepository.deleteAll();
     }
 
+    @Override
+    public List<Item> findByNamePrefix(String prefix) {
+        return springCrudItemRepository.findByNamePrefix(prefix);
+    }
+
     interface SpringCrudItemRepository extends CrudRepository<Item, Long> {
         Item findTopByOrderByPriceDesc();
+
+        @Query("from Item where name like :prefix%")
+        List<Item> findByNamePrefix(@Param("prefix") String namePrefix);
     }
 
 

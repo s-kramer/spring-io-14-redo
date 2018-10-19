@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 class StubItemRepository implements ItemRepository {
 
@@ -45,6 +46,11 @@ class StubItemRepository implements ItemRepository {
     @Override
     public void deleteAllItems() {
         db.clear();
+    }
+
+    @Override
+    public List<Item> findByNamePrefix(String prefix) {
+        return db.values().stream().filter(entry -> entry.getName().startsWith(prefix)).collect(Collectors.toList());
     }
 
     private long setAndGetNextId(Item item) {
