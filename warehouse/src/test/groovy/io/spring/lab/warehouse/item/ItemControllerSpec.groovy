@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = ["test"])
 @AutoConfigureTestDatabase
-class ItemControllerTest extends Specification {
+class ItemControllerSpec extends Specification {
 
     @Autowired
     MockMvc mockMvc
