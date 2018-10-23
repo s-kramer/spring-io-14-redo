@@ -37,3 +37,19 @@ class ItemInitializer implements ApplicationRunner {
         ItemDataInitializator.itemsTestData(items);
     }
 }
+
+@Configuration
+@EnableJpaRepositories(considerNestedRepositories = true)
+class ApplicationConfiguration {
+    private Random random = new Random();
+
+    @Bean
+    HealthIndicator randomHealthIndicator() {
+        return () -> random.nextBoolean()
+                ? Health.up().build()
+                : Health.down().withDetail("random", random.nextInt()).build();
+    }
+
+}
+
+
