@@ -1,13 +1,18 @@
 package io.spring.lab.warehouse;
 
+import java.util.Random;
+
 import io.spring.lab.warehouse.item.ItemRepository;
 import lombok.AllArgsConstructor;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
@@ -18,12 +23,6 @@ public class WarehouseApplication {
     public static void main(String[] args) {
         SpringApplication.run(WarehouseApplication.class, args);
     }
-}
-
-@Configuration
-@EnableJpaRepositories(considerNestedRepositories = true)
-class ApplicationConfiguration {
-
 }
 
 @ConditionalOnProperty(value = "test.data", matchIfMissing = true, havingValue = "true")
