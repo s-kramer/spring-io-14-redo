@@ -3,7 +3,6 @@ package io.spring.lab.warehouse.item;
 import java.util.List;
 import java.util.Optional;
 
-import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 
 import org.springframework.data.jpa.repository.Query;
@@ -23,8 +22,7 @@ class JpaItemRepository implements ItemRepository {
 
     @Override
     public Optional<Item> findOne(long id) {
-        return Try.of(() -> springCrudItemRepository.findOne(id))
-                .toJavaOptional();
+        return springCrudItemRepository.findById(id);
     }
 
     @Override
@@ -44,7 +42,7 @@ class JpaItemRepository implements ItemRepository {
 
     @Override
     public void delete(long id) {
-        springCrudItemRepository.delete(id);
+        springCrudItemRepository.deleteById(id);
     }
 
     @Override

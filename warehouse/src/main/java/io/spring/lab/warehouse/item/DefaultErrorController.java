@@ -3,10 +3,9 @@ package io.spring.lab.warehouse.item;
 import static io.spring.lab.warehouse.item.ErrorMessage.messageResponseOf;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
-import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeStacktrace;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

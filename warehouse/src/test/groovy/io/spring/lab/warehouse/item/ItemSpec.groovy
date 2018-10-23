@@ -22,7 +22,7 @@ class ItemSpec extends Specification {
         given:
             Item item = new Item(1L, 'item', 5, ONE)
         when:
-            item.update(ItemUpdate.of('test item', TEN).withId(1L))
+            item.update(ItemUpdate.of(null, 'test item', TEN).withId(1L))
         then:
             item.id == 1L
             item.name == 'test item'

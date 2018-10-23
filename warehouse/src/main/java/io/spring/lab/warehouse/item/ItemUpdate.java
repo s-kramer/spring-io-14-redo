@@ -13,12 +13,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Getter
-@AllArgsConstructor(access = PRIVATE)
+@AllArgsConstructor(access = PRIVATE, staticName = "of")
 @EqualsAndHashCode
 @ToString
 class ItemUpdate {
 
-	private final long id;
+	private final Long id;
 
 	private final String name;
 
@@ -30,6 +30,6 @@ class ItemUpdate {
 
     @JsonCreator
     static ItemUpdate fromJson(@JsonProperty("name") String name, @JsonProperty("price") BigDecimal price) {
-        return new ItemUpdate(0, name, price);
+        return new ItemUpdate(0L, name, price);
     }
 }
