@@ -33,7 +33,7 @@ class ItemInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        ItemDataInitializator.itemsTestData(items);
+        ItemDataInitializer.itemsTestData(items);
     }
 }
 
