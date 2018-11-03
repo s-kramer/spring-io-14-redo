@@ -1,5 +1,7 @@
 package io.spring.lab.warehouse.item
 
+import io.micrometer.core.instrument.Counter
+import io.micrometer.core.instrument.MeterRegistry
 import spock.lang.Specification
 
 import static io.spring.lab.warehouse.ItemDataInitializer.itemsTestData
@@ -8,10 +10,13 @@ class ItemServiceSpec extends Specification {
 
     ItemRepository repository = new StubItemRepository()
 
-    ItemService items = new ItemService(repository)
+    Counter mockCounter = Mock(Counter.class)
+    private MeterRegistry mockMeterRegistry = Mock(MeterRegistry.class)
+    ItemService items = new ItemService(repository, mockMeterRegistry)
 
     void setup() {
         itemsTestData(repository)
+        mockMeterRegistry.counter(_ as String) >> mockCounter
     }
 
     def  "should find all items" () {
@@ -46,7 +51,7 @@ class ItemServiceSpec extends Specification {
 
     def "should check out some items"() {
         when:
-            items.updateStock(new ItemStockUpdate(1, -20))
+            items.updateStock(new ItemStockUpdate(1L, -20))
         then:
             Item item = items.findOne(1L)
             item.count == 80
