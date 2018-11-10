@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+ management:
+  metrics:
+    export:
+      graphite:
+        enabled: false

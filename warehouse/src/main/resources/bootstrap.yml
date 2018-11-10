@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:9000
+      fail-fast: true
+  application:
+    name: warehouse
+  profiles:
+    active: local-env
