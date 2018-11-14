@@ -1,6 +1,6 @@
 spring:
   application:
-    name: warehouse
+    name: service-registry
   cloud:
     config:
       uri: http://localhost:9000
@@ -10,3 +10,5 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:9010/eureka
+    fetch-registry: false
+    register-with-eureka: false
